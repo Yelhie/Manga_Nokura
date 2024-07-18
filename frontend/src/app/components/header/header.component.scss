@@ -1,0 +1,87 @@
+header {
+  display: grid;
+  grid-template-columns: 13% 87%;
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  padding: 10px;
+
+  a {
+    color: var(--text-color);
+    text-decoration: none;
+    font-size: 20px;
+    padding: 0 5px;
+
+    &:hover {
+      cursor: pointer;
+      color: var(--hover-color);
+    }
+  }
+
+  .account-icon,
+  .shopping-icon,
+  .theme-icon {
+    height: 25px;
+    width: 25px;
+    fill: var(--text-color);
+
+    &:hover {
+      cursor: pointer;
+      fill: var(--hover-color);
+    }
+  }
+
+  .header-left {
+    .logo {
+      height: 150px;
+    }
+  }
+
+  .header-right {
+    .nav-top {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      padding: 30px 0 10px 0;
+      display: flex;
+    }
+
+    .account-icon {
+      margin-left: 20px;
+    }
+
+    ul {
+      align-items: center;
+      display: flex;
+      gap: 5px;
+    }
+
+    .nav-bottom ul {
+      border-top: 1px solid var(--text-color);
+      padding-top: 10px;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      height: 25px;
+
+      input {
+        height: 23px;
+        background-color: var(--background-color);
+        color: var(--text-color);
+        border: 1px solid var(--text-color);
+        padding: 5px;
+        border-radius: 5px;
+      }
+
+      .shopping-icon {
+        height: 25px;
+        padding: 4px;
+        border: 1px solid var(--text-color);
+        border-radius: 5px;
+
+        &:hover {
+          border: 1px solid var(--hover-color);
+        }
+      }
+    }
+  }
+}

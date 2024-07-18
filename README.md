@@ -1,12 +1,18 @@
-# Manga No Kura
+# MangaSoko
 
 ## Technologies Utilisées
 
 **Backend**
 
+- Node.js
+
 **Base de Données**
 
+- sql
+
 **Frontend**
+
+- Angular
 
 ## Fonctionnalités
 

@@ -1,0 +1,32 @@
+<header>
+  <div class="header-left">
+    <img class="logo" src="/logosoko.webp" alt="logo MangaSoko" />
+  </div>
+  <div class="header-right">
+    <nav class="nav-top">
+      <ul>
+        <li><a routerLink="/Nouveautés">Nouveautés</a></li>
+        <li><a routerLink="/MeilleuresVentes">Meilleures ventes</a></li>
+        <li><a routerLink="/Catalogue">Catalogue</a></li>
+        <li class="account-icon">
+          <app-account-icon alt="Account Icon"></app-account-icon>
+        </li>
+        <li class="theme-icon">
+          <app-sun-icon
+            (click)="toggleDarkMode()"
+            alt="Dark Mode Icon"
+          ></app-sun-icon>
+        </li>
+      </ul>
+    </nav>
+
+    <nav class="nav-bottom">
+      <ul>
+        <li><input type="text" placeholder="Rechercher" /></li>
+        <li class="shopping-icon">
+          <app-shopping-icon alt="Panier Icon"></app-shopping-icon>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>
