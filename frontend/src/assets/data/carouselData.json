@@ -1,0 +1,23 @@
+[
+  {
+    "filePath": "/banner1.webp",
+    "title": "Ruri Dragon",
+    "authorName": "Masaoki Shindo",
+    "tome": "Tome 1",
+    "buyLink": "#"
+  },
+  {
+    "filePath": "/banner2.webp",
+    "title": "xxxHolic",
+    "authorName": "Clamp",
+    "tome": "Premmium Collection",
+    "buyLink": "#"
+  },
+  {
+    "filePath": "/banner3.webp",
+    "title": "Title",
+    "authorName": "Author",
+    "tome": "Tome",
+    "buyLink": "#"
+  }
+]

@@ -1,0 +1,24 @@
+<section class="banner">
+  <div
+    class="carousel-slide"
+    *ngFor="let item of items; let i = index"
+    [class.active]="i === currentIndex"
+  >
+    <img [src]="item.filePath" alt="{{ item.title }}" />
+    <div class="carousel-caption">
+      <h3>{{ item.title }}</h3>
+      <p>de {{ item.authorName }}</p>
+      <p>{{ item.tome }}</p>
+      <button>
+        <a [href]="item.buyLink" target="_blank">Achetez maintenant</a>
+      </button>
+    </div>
+  </div>
+  <div class="carousel-dots">
+    <span
+      *ngFor="let item of items; let i = index"
+      [class.active]="i === currentIndex"
+      (click)="setSlide(i)"
+    ></span>
+  </div>
+</section>

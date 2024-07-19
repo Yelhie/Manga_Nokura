@@ -1,0 +1,130 @@
+.banner {
+  display: flex;
+  position: relative;
+  justify-content: center;
+
+  .carousel-slide {
+    display: none;
+    transition: opacity 1s;
+
+    &.active {
+      display: block;
+      opacity: 1;
+    }
+
+    & img {
+      height: 360px;
+      max-width: 1100px;
+      object-fit: cover;
+      border: 1px solid rgb(0, 0, 0);
+      margin: 0 auto;
+      border-radius: 15px;
+      animation: BannerSlideAnimation 2s ease 0s 1 normal forwards;
+
+      @keyframes BannerSlideAnimation {
+        0% {
+          opacity: 1;
+          transform: translateX(-50px);
+        }
+
+        100% {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+    }
+  }
+
+  h3,
+  p {
+    animation: BannerInfosAnimation 2s ease 0s 1 normal forwards;
+
+    @keyframes BannerInfosAnimation {
+      0% {
+        opacity: 0;
+        transform: scale(1.4);
+      }
+
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+  }
+
+  .carousel-caption {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    width: 100%;
+    color: white;
+    border-radius: 15px;
+    position: absolute;
+    top: 35px;
+    left: 50px;
+    text-align: center;
+
+    h3 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      background-color: black;
+      padding: 6px 10px;
+      border-radius: 6px;
+    }
+
+    p {
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+      background-color: black;
+      padding: 6px 10px;
+      border-radius: 6px;
+    }
+  }
+
+  button {
+    position: absolute;
+    top: 260px;
+    left: 70px;
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    background-color: var(--hover-color);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.5s;
+
+    a {
+      color: white;
+      text-decoration: none;
+    }
+
+    &:hover {
+      background-color: var(--hover-color);
+    }
+  }
+
+  //***** Dot *****\\
+  .carousel-dots {
+    text-align: center;
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+  }
+
+  .carousel-dots span {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin: 0 5px;
+    cursor: pointer;
+    background: white;
+    border: 1px solid rgb(110, 110, 110);
+  }
+
+  .carousel-dots span.active {
+    background: rgb(110, 110, 110);
+    border: 1px solid white;
+  }
+}
