@@ -11,7 +11,9 @@ Considérant cette approche bien plus stimulante, instructive et amusante, le pr
 **Backend**
 
 - Node.js
+- Express
 - Sequelize
+- TypeScript
 
 **Base de Données**
 
@@ -28,7 +30,14 @@ Considérant cette approche bien plus stimulante, instructive et amusante, le pr
 
 ## Fonctionnalités
 
-🚧 Infos à venir (Mais dans l'idée : Fonction de recherche, système de compte, panier, suivi des commandes, gestion des stocks, etc. )
+🚧 Fonctionalités à venir : Fonction de recherche, système de compte, panier, suivi des commandes, gestion des stocks, etc.
+
+**Backend**
+
+- **Base de données** : PostgreSQL.
+- **Routes API Book** : Méthode POST pour ajouter un nouveau manga.
+- **Stockage des fichiers médias** : En local avec Multer.
+- **Test** : Mise en place de test avec Jest pour le backend
 
 **Frontend**
 
