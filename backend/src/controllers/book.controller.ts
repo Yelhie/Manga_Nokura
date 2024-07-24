@@ -6,37 +6,16 @@ export const createBook = async (
   req: Request,
   res: Response
 ): Promise<void> => {
-  let {
+  const {
     title,
     author,
     tome,
     genre,
     price,
-    publishedDate,
+    publishedDate = new Date(),
     description,
-    coverImagePath = req.file?.path,
   } = req.body;
-
-  // Vérification des champs manquants
-  const missingFields = [];
-  if (!title) missingFields.push("title missing");
-  if (!author) missingFields.push("author missing");
-  if (tome === undefined) missingFields.push("tome missing");
-  if (!genre) missingFields.push("genre missing");
-  if (price === undefined) missingFields.push("price missing");
-  if (!description) missingFields.push("description missing");
-  if (!coverImagePath) missingFields.push("coverImagePath missing");
-
-  if (missingFields.length > 0) {
-    res
-      .status(400)
-      .json({ error: "Missing required fields", details: missingFields });
-    return;
-  }
-
-  if (!publishedDate) {
-    publishedDate = new Date();
-  }
+  const coverImagePath = req.file?.path;
 
   try {
     const newBook = await Book.create({
@@ -47,7 +26,7 @@ export const createBook = async (
       price,
       publishedDate,
       description,
-      coverImagePath: req.file?.path,
+      coverImagePath,
     });
 
     res.status(201).json(newBook);
