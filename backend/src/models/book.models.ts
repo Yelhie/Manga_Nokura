@@ -46,8 +46,11 @@ Book.init(
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
-        notNull: { msg: "Le tome est obligatoire." },
-        min: { args: [1], msg: "Le tome doit être supérieur à 0." },
+        notNull: { msg: "Le nombre de tome est obligatoire." },
+        min: {
+          args: [1],
+          msg: "Le nombre de tome doit être supérieur ou égal à 1.",
+        },
       },
     },
     genre: {

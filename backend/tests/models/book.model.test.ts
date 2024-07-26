@@ -1,4 +1,4 @@
-import { Sequelize, ValidationError } from "sequelize";
+import { ValidationError } from "sequelize";
 import Book from "../../src/models/book.models";
 import sequelize from "../../src/config/dbConfig";
 
@@ -28,9 +28,10 @@ const assertValidationError = async (
   }
 };
 
+// Test model creation with valid attributes
 describe("Book Model", () => {
   it("should create a book with valid attributes", async () => {
-    const book = await Book.create({
+    const newBook = {
       title: "Test Title",
       author: "Test Author",
       tome: 1,
@@ -39,13 +40,20 @@ describe("Book Model", () => {
       publishedDate: new Date(),
       description: "Test Description",
       coverImagePath: "/uploads/test-image.jpg",
-    });
+    };
+
+    const book = await Book.create(newBook);
 
     expect(book.id).toBeDefined();
-    expect(book.title).toBe("Test Title");
-    expect(book.author).toBe("Test Author");
+
+    const { publishedDate, ...rest } = newBook;
+    expect(book).toMatchObject(rest);
+    expect(book.publishedDate.getTime()).toEqual(
+      newBook.publishedDate.getTime()
+    );
   });
 
+  // Test model validation with invalid attributes title
   it("should throw a validation error if title is missing", async () => {
     await assertValidationError(
       () =>
@@ -62,6 +70,59 @@ describe("Book Model", () => {
     );
   });
 
+  // Test model validation with invalid attributes author
+  it("should throw a validation error if author is missing", async () => {
+    await assertValidationError(
+      () =>
+        Book.create({
+          title: "Test Title",
+          tome: 1,
+          genre: "Test Genre",
+          price: 9.99,
+          publishedDate: new Date(),
+          description: "Test Description",
+          coverImagePath: "/uploads/test-image.jpg",
+        }),
+      "L'auteur est obligatoire."
+    );
+  });
+
+  // Test model validation with invalid attributes tome
+  it("should throw a validation error if tome is negative", async () => {
+    await assertValidationError(
+      () =>
+        Book.create({
+          title: "Test Title",
+          author: "Test Author",
+          tome: -1,
+          genre: "Test Genre",
+          price: 9.99,
+          publishedDate: new Date(),
+          description: "Test Description",
+          coverImagePath: "/uploads/test-image.jpg",
+        }),
+      "Le nombre de tome doit être supérieur ou égal à 1."
+    );
+  });
+
+  // Test model validation with invalid attributes genre
+  it("should throw a validation error if genre is missing", async () => {
+    await assertValidationError(
+      () =>
+        Book.create({
+          title: "Test Title",
+          author: "Test Author",
+          tome: 1,
+          price: 9.99,
+          publishedDate: new Date(),
+          description: "Short",
+          coverImagePath: "/uploads/test-image.jpg",
+        }),
+      "Le genre est obligatoire."
+    );
+  });
+
+  // Test model validation with invalid attributes price
   it("should throw a validation error if price is negative", async () => {
     await assertValidationError(
       () =>
@@ -79,6 +140,7 @@ describe("Book Model", () => {
     );
   });
 
+  // Test model validation with invalid attributes date
   it("should have a default publishedDate if not provided", async () => {
     const book = await Book.create({
       title: "Test Title",
@@ -96,6 +158,7 @@ describe("Book Model", () => {
     );
   });
 
+  // Test model validation with invalid attributes description
   it("should throw a validation error if description is too short", async () => {
     await assertValidationError(
       () =>
@@ -113,6 +176,7 @@ describe("Book Model", () => {
     );
   });
 
+  // Test model validation with invalid attributes coverImagePath
   it("should throw a validation error if coverImagePath is missing", async () => {
     await assertValidationError(
       () =>
