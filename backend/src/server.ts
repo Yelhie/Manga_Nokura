@@ -1,16 +1,7 @@
 import sequelize from "./config/dbConfig";
 import app from "./app";
 
-// import express, { Application } from "express";
-// import bookRoutes from "./routes/book.routes";
-
 const port: number | string = process.env.PORT || 3000;
-// const app: Application = express();
-
-// app.use(express.json());
-// app.use(express.urlencoded({ extended: true }));
-
-// app.use("/api", bookRoutes);
 
 sequelize
   .authenticate()

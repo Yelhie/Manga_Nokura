@@ -39,7 +39,10 @@ describe("Book Model", () => {
       price: 9.99,
       publishedDate: new Date(),
       description: "Test Description",
-      coverImagePath: "/uploads/test-image.jpg",
+      popularity: 0,
+      stock: 0,
+      thumbnailImagePath: "/uploads/thumbail/test-image.jpg",
+      coverImagePath: "/uploads/cover/test-image.jpg",
     };
 
     const book = await Book.create(newBook);
@@ -64,7 +67,10 @@ describe("Book Model", () => {
           price: 9.99,
           publishedDate: new Date(),
           description: "Test Description",
-          coverImagePath: "/uploads/test-image.jpg",
+          popularity: 0,
+          stock: 0,
+          thumbnailImagePath: "/uploads/thumbail/test-image.jpg",
+          coverImagePath: "/uploads/cover/test-image.jpg",
         }),
       "Le titre est obligatoire."
     );
@@ -81,7 +87,10 @@ describe("Book Model", () => {
           price: 9.99,
           publishedDate: new Date(),
           description: "Test Description",
-          coverImagePath: "/uploads/test-image.jpg",
+          popularity: 0,
+          stock: 0,
+          thumbnailImagePath: "/uploads/thumbail/test-image.jpg",
+          coverImagePath: "/uploads/cover/test-image.jpg",
         }),
       "L'auteur est obligatoire."
     );
@@ -99,7 +108,10 @@ describe("Book Model", () => {
           price: 9.99,
           publishedDate: new Date(),
           description: "Test Description",
-          coverImagePath: "/uploads/test-image.jpg",
+          popularity: 0,
+          stock: 0,
+          thumbnailImagePath: "/uploads/thumbail/test-image.jpg",
+          coverImagePath: "/uploads/cover/test-image.jpg",
         }),
       "Le nombre de tome doit être supérieur ou égal à 1."
     );
@@ -116,7 +128,10 @@ describe("Book Model", () => {
           price: 9.99,
           publishedDate: new Date(),
           description: "Short",
-          coverImagePath: "/uploads/test-image.jpg",
+          popularity: 0,
+          stock: 0,
+          thumbnailImagePath: "/uploads/thumbail/test-image.jpg",
+          coverImagePath: "/uploads/cover/test-image.jpg",
         }),
       "Le genre est obligatoire."
     );
@@ -134,7 +149,10 @@ describe("Book Model", () => {
           price: -1,
           publishedDate: new Date(),
           description: "Test Description",
-          coverImagePath: "/uploads/test-image.jpg",
+          popularity: 0,
+          stock: 0,
+          thumbnailImagePath: "/uploads/thumbail/test-image.jpg",
+          coverImagePath: "/uploads/cover/test-image.jpg",
         }),
       "Le prix doit être supérieur ou égal à 0."
     );
@@ -149,7 +167,10 @@ describe("Book Model", () => {
       genre: "Test Genre",
       price: 9.99,
       description: "Test Description",
-      coverImagePath: "/uploads/test-image.jpg",
+      popularity: 0,
+      stock: 0,
+      thumbnailImagePath: "/uploads/thumbail/test-image.jpg",
+      coverImagePath: "/uploads/cover/test-image.jpg",
     });
 
     expect(book.publishedDate).toBeInstanceOf(Date);
@@ -170,9 +191,54 @@ describe("Book Model", () => {
           price: 9.99,
           publishedDate: new Date(),
           description: "Short",
-          coverImagePath: "/uploads/test-image.jpg",
+          popularity: 0,
+          stock: 0,
+          thumbnailImagePath: "/uploads/thumbail/test-image.jpg",
+          coverImagePath: "/uploads/cover/test-image.jpg",
         }),
       "La description doit contenir entre 10 et 500 caractères."
+    );
+  });
+
+  // Test model validation with invalid attributes popularity
+  it("should have a validation error if popularity is negative", async () => {
+    await assertValidationError(
+      () =>
+        Book.create({
+          title: "Test Title",
+          author: "Test Author",
+          tome: 1,
+          genre: "Test Genre",
+          price: 9.99,
+          publishedDate: new Date(),
+          description: "Test Description",
+          popularity: -1,
+          stock: 0,
+          thumbnailImagePath: "/uploads/thumbail/test-image.jpg",
+          coverImagePath: "/uploads/cover/test-image.jpg",
+        }),
+      "La popularité doit être supérieure ou égale à 0."
+    );
+  });
+
+  // Test model validation with invalid attributes stock
+  it("should have a validation error if stock is negative", async () => {
+    await assertValidationError(
+      () =>
+        Book.create({
+          title: "Test Title",
+          author: "Test Author",
+          tome: 1,
+          genre: "Test Genre",
+          price: 9.99,
+          publishedDate: new Date(),
+          description: "Test Description",
+          popularity: 0,
+          stock: -1,
+          thumbnailImagePath: "/uploads/thumbail/test-image.jpg",
+          coverImagePath: "/uploads/cover/test-image.jpg",
+        }),
+      "Le stock doit être supérieur ou égal à 0."
     );
   });
 
@@ -188,8 +254,31 @@ describe("Book Model", () => {
           price: 9.99,
           publishedDate: new Date(),
           description: "Test Description",
+          popularity: 0,
+          stock: 0,
+          thumbnailImagePath: "/uploads/thumbail/test-image.jpg",
         }),
       "Le chemin de l'image de couverture est obligatoire."
+    );
+  });
+
+  // Test model validation with invalid attributes thumbnailImagePath
+  it("should throw a validation error if thumbnailImagePath is missing", async () => {
+    await assertValidationError(
+      () =>
+        Book.create({
+          title: "Test Title",
+          author: "Test Author",
+          tome: 1,
+          genre: "Test Genre",
+          price: 9.99,
+          publishedDate: new Date(),
+          description: "Test Description",
+          popularity: 0,
+          stock: 0,
+          coverImagePath: "/uploads/cover/test-image.jpg",
+        }),
+      "Le chemin de la miniature est obligatoire."
     );
   });
 });

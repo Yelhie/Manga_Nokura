@@ -1,15 +1,12 @@
 import request from "supertest";
 import app from "../../src/app";
-// import { createBook } from "../../src/controllers/book.controller";
 import Book from "../../src/models/book.models";
 
-// Mock du module Book
 jest.mock("../../src/models/book.models");
 const mockBookCreate = Book.create as jest.Mock;
 
 describe("POST /api/books", () => {
   beforeEach(() => {
-    // Réinitialise les mocks avant chaque test
     jest.clearAllMocks();
   });
 
@@ -23,9 +20,12 @@ describe("POST /api/books", () => {
       price: 9.99,
       publishedDate: new Date(),
       description: "Test Description",
-      coverImagePath: "/uploads/test-image.jpg",
+      thumbnailImagePath: "/uploads/thumbail/test-image.jpg",
+      coverImagePath: "/uploads/cover/test-image.jpg",
+      popularity: 0,
+      stock: 0,
     };
-    mockBookCreate.mockResolvedValue(newBook); // Simuler la création réussie
+    mockBookCreate.mockResolvedValue(newBook); // Simul la création réussie
 
     const response = await request(app).post("/api/books").send({
       title: "Test Title",
@@ -34,6 +34,8 @@ describe("POST /api/books", () => {
       genre: "Test Genre",
       price: 9.99,
       description: "Test Description",
+      popularity: 0,
+      stock: 0,
     });
 
     expect(response.status).toBe(201);

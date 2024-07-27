@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
+    "test:failed": "jest --onlyFailures",
     "build": "tsc",
     "start": "node dist/server.ts",
     "dev": "nodemon"

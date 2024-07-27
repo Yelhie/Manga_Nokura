@@ -4,7 +4,13 @@ import path from "path";
 // Défini où et comment les fichiers seront stockés et renommés
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "src/uploads/"); // Dossier où les fichiers seront stockés dans le projet
+    let uploadPath = "src/uploads/";
+    if (file.fieldname === "thumbnail") {
+      uploadPath += "thumbnail";
+    } else if (file.fieldname === "cover") {
+      uploadPath += "cover";
+    }
+    cb(null, uploadPath); // Dossier où les fichiers seront stockés dans le projet
   },
   filename: (req, file, cb) => {
     cb(null, Date.now() + path.extname(file.originalname)); // Renomme le fichier avec un timestamp
@@ -42,6 +48,9 @@ const uploadMiddleware = multer({
   storage: storage,
   fileFilter: fileFilter,
   limits: { fileSize: FILE_SIZE_LIMIT },
-}).single("coverImagePath"); // Limite le nombre de fichiers à 1 et le nom du champ du formulaire est coverImagePath
+}).fields([
+  { name: "thumbnail", maxCount: 1 },
+  { name: "cover", maxCount: 1 },
+]); // Permet l'upload de plusieurs fichiers avec des champs différents
 
 export { uploadMiddleware };

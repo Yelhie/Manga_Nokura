@@ -14,8 +14,21 @@ export const createBook = async (
     price,
     publishedDate = new Date(),
     description,
+    popularity,
+    stock,
   } = req.body;
-  const coverImagePath = req.file?.path;
+
+  let thumbnailImagePath: string | undefined;
+  let coverImagePath: string | undefined;
+
+  if (req.files && !Array.isArray(req.files)) {
+    if (req.files.thumbnail && Array.isArray(req.files.thumbnail)) {
+      thumbnailImagePath = req.files.thumbnail[0]?.path;
+    }
+    if (req.files.cover && Array.isArray(req.files.cover)) {
+      coverImagePath = req.files.cover[0]?.path;
+    }
+  }
 
   try {
     const newBook = await Book.create({
@@ -26,6 +39,9 @@ export const createBook = async (
       price,
       publishedDate,
       description,
+      popularity,
+      stock,
+      thumbnailImagePath,
       coverImagePath,
     });
 

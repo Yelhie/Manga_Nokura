@@ -7,7 +7,10 @@ export interface BookAttributes {
   price: number;
   publishedDate: Date;
   description: string;
+  thumbnailImagePath: string;
   coverImagePath: string;
+  popularity: number;
+  stock: number;
 }
 
 export interface BookCreationAttributes extends Partial<BookAttributes> {

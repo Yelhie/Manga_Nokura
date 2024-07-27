@@ -14,6 +14,9 @@ class Book
   public price!: number;
   public publishedDate!: Date;
   public description!: string;
+  public popularity!: number;
+  public stock!: number;
+  public thumbnailImagePath!: string;
   public coverImagePath!: string;
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
@@ -81,6 +84,38 @@ Book.init(
         len: {
           args: [10, 500],
           msg: "La description doit contenir entre 10 et 500 caractères.",
+        },
+      },
+    },
+    popularity: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 0,
+      validate: {
+        min: {
+          args: [0],
+          msg: "La popularité doit être supérieure ou égale à 0.",
+        },
+      },
+    },
+    stock: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 0,
+      validate: {
+        min: {
+          args: [0],
+          msg: "Le stock doit être supérieur ou égal à 0.",
+        },
+      },
+    },
+    thumbnailImagePath: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: { msg: "Le chemin de la miniature est obligatoire." },
+        notEmpty: {
+          msg: "Le chemin de la miniature ne peut pas être vide.",
         },
       },
     },
