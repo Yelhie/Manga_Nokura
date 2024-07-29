@@ -1,18 +1,16 @@
-export interface BookAttributes {
+import { Genre } from "./genre";
+
+export interface Book {
   id: number;
   title: string;
   author: string;
   tome: number;
-  genre: string;
+  genres: Genre[];
   price: number;
   publishedDate: Date;
   description: string;
-  thumbnailImagePath: string;
-  coverImagePath: string;
   popularity: number;
   stock: number;
-}
-
-export interface BookCreationAttributes extends Partial<BookAttributes> {
-  id?: number;
+  thumbnailImagePath: string;
+  coverImagePath: string;
 }

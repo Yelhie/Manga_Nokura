@@ -1,7 +1,6 @@
 import multer from "multer";
 import path from "path";
 
-// Défini où et comment les fichiers seront stockés et renommés
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     let uploadPath = "src/uploads/";
@@ -10,14 +9,13 @@ const storage = multer.diskStorage({
     } else if (file.fieldname === "cover") {
       uploadPath += "cover";
     }
-    cb(null, uploadPath); // Dossier où les fichiers seront stockés dans le projet
+    cb(null, uploadPath);
   },
   filename: (req, file, cb) => {
-    cb(null, Date.now() + path.extname(file.originalname)); // Renomme le fichier avec un timestamp
+    cb(null, Date.now() + path.extname(file.originalname));
   },
 });
 
-// Défini les types de fichiers acceptés et la gestion des erreurs de type de fichier
 const ALLOWED_FILE_TYPES = /jpeg|jpg|png|webp/;
 
 const fileFilter = (
@@ -35,14 +33,13 @@ const fileFilter = (
   } else {
     cb(
       new Error(
-        "Error: Seul les fichiers aux formats jpeg, jpg, png et webp sont autorisées."
+        "Error: Only images with file types jpeg, jpg, png, and webp are allowed"
       )
     );
   }
 };
 
-// Défini la taille maximale de fichier autorisé lors de l'upload
-const FILE_SIZE_LIMIT = 1024 * 1024 * 5; // 5MB
+const FILE_SIZE_LIMIT = 1024 * 1024 * 5;
 
 const uploadMiddleware = multer({
   storage: storage,
@@ -51,6 +48,6 @@ const uploadMiddleware = multer({
 }).fields([
   { name: "thumbnail", maxCount: 1 },
   { name: "cover", maxCount: 1 },
-]); // Permet l'upload de plusieurs fichiers avec des champs différents
+]);
 
 export { uploadMiddleware };
