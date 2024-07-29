@@ -1,52 +1,81 @@
-import { Request, Response } from "express";
 import { ValidationError } from "sequelize";
-import Book from "../models/book.models";
+import { Request, Response } from "express";
+import fs from "fs";
+import Book from "../models/book.model";
+import Genre from "../models/genre.model";
+import sequelize from "../config/dbConfig";
 
-export const createBook = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
-  const {
-    title,
-    author,
-    tome,
-    genre,
-    price,
-    publishedDate = new Date(),
-    description,
-    popularity,
-    stock,
-  } = req.body;
+export const createBook = async (req: Request, res: Response) => {
+  const transaction = await sequelize.transaction(); // start a transaction to ensure data consistency in the database
 
-  let thumbnailImagePath: string | undefined;
-  let coverImagePath: string | undefined;
-
-  if (req.files && !Array.isArray(req.files)) {
-    if (req.files.thumbnail && Array.isArray(req.files.thumbnail)) {
-      thumbnailImagePath = req.files.thumbnail[0]?.path;
-    }
-    if (req.files.cover && Array.isArray(req.files.cover)) {
-      coverImagePath = req.files.cover[0]?.path;
-    }
-  }
+  let thumbnailImagePath = "";
+  let coverImagePath = "";
 
   try {
-    const newBook = await Book.create({
+    const {
       title,
       author,
       tome,
-      genre,
+      genres,
       price,
-      publishedDate,
+      publishedDate = new Date(),
       description,
       popularity,
       stock,
-      thumbnailImagePath,
-      coverImagePath,
-    });
+    } = req.body;
 
+    if (req.files && !Array.isArray(req.files)) {
+      if (req.files.thumbnail && req.files.thumbnail.length > 0) {
+        thumbnailImagePath = req.files.thumbnail[0].path;
+      }
+      if (req.files.cover && req.files.cover.length > 0) {
+        coverImagePath = req.files.cover[0].path;
+      }
+    }
+
+    const newBook = await Book.create(
+      {
+        title,
+        author,
+        tome,
+        price,
+        publishedDate,
+        description,
+        popularity,
+        stock,
+        thumbnailImagePath,
+        coverImagePath,
+      },
+      { transaction }
+    );
+
+    if (genres && genres.length > 0) {
+      const genreInstances = await Genre.findAll({
+        where: {
+          id: genres,
+        },
+      });
+
+      await (newBook as any).addGenres(genreInstances, { transaction });
+    }
+
+    await transaction.commit();
     res.status(201).json(newBook);
   } catch (error) {
+    await transaction.rollback();
+
+    // delete uploaded images if transaction fails
+    if (thumbnailImagePath) {
+      fs.unlink(thumbnailImagePath, (err) => {
+        if (err) console.error("Error deleting thumbnail image:", err);
+      });
+    }
+    if (coverImagePath) {
+      fs.unlink(coverImagePath, (err) => {
+        if (err) console.error("Error deleting cover image:", err);
+      });
+    }
+
     if (error instanceof ValidationError) {
       res.status(400).json({
         error: "Validation error",
