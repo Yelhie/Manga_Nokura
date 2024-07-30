@@ -50,7 +50,7 @@ class Book
 Book.init(
   {
     id: {
-      type: DataTypes.INTEGER.UNSIGNED,
+      type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
     },
@@ -66,7 +66,7 @@ Book.init(
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notNull: { msg: "Othor is required" },
+        notNull: { msg: "Author is required" },
         notEmpty: { msg: "Author cannot be empty." },
       },
     },

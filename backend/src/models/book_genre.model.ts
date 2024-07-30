@@ -17,11 +17,11 @@ class BookGenre
 BookGenre.init(
   {
     bookId: {
-      type: DataTypes.INTEGER.UNSIGNED,
+      type: DataTypes.INTEGER,
       primaryKey: true,
     },
     genreId: {
-      type: DataTypes.INTEGER.UNSIGNED,
+      type: DataTypes.INTEGER,
       primaryKey: true,
     },
   },
