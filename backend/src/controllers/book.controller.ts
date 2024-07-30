@@ -4,6 +4,7 @@ import fs from "fs";
 import Book from "../models/book.model";
 import Genre from "../models/genre.model";
 import sequelize from "../config/dbConfig";
+import exp from "constants";
 
 export const createBook = async (req: Request, res: Response) => {
   const transaction = await sequelize.transaction(); // start a transaction to ensure data consistency in the database
@@ -92,6 +93,20 @@ export const createBook = async (req: Request, res: Response) => {
       res.status(500).json({
         error: "Failed to create book",
         details: "Unknown error occurred",
+      });
+    }
+  }
+};
+
+export const getAllBooks = async (req: Request, res: Response) => {
+  try {
+    const books = await Book.findAll();
+    res.status(200).json(books);
+  } catch (error) {
+    if (error instanceof Error) {
+      res.status(500).json({
+        message: "Failed to retrieve books",
+        error: error.message,
       });
     }
   }

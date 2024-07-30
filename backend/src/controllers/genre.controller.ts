@@ -38,3 +38,20 @@ export const createGenre = async (
     }
   }
 };
+
+export const getAllGenders = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const genres = await Genre.findAll();
+    res.status(200).json(genres);
+  } catch (error) {
+    if (error instanceof Error) {
+      res.status(500).json({
+        message: "Failed to retrieve genders",
+        error: error.message,
+      });
+    }
+  }
+};
