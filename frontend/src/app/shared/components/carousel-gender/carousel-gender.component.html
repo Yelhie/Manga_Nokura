@@ -1,0 +1,16 @@
+<section class="carousel-gender-section">
+  <div class="carousel-gender-container-top">
+    <h2>Genre</h2>
+    <div class="nav">
+      <button (click)="prev()"><</button>
+      <button (click)="next()">></button>
+    </div>
+  </div>
+
+  <div class="carousel-gender-container">
+    <app-card-gender
+      *ngFor="let genre of visibleGenres"
+      [genre]="genre"
+    ></app-card-gender>
+  </div>
+</section>
